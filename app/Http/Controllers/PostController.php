@@ -26,6 +26,7 @@ class PostController extends Controller
     	$post->user_id = Auth::id();
 
     	$post->save();
+        $post->tags()->sync($request->tags,false);
     	return redirect('/home')->with('msg','Successfully Inserted');
 
     }

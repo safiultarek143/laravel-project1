@@ -17,11 +17,18 @@
                     <label for="">Enter Post Description</label><br>
                     <textarea name="description" class="form-control" rows="5"></textarea>
                     <label for="">category</label><br>
-                    <select class="form-control" name="category_id">
+                    <select class="form-control select2" name="category_id">
                         @foreach($categories as $category)
                         <option value="{{ $category->id}}">{{ $category->name }}</option>
                         @endforeach
                     </select>
+                     <label for="">Tags</label><br>
+                    <select class="form-control select2-multi" name="tags[]"multiple>
+                        @foreach($tags as $tag)
+                        <option value="{{ $tag->id}}">{{ $tag->name }}</option>
+                        @endforeach
+                    </select>
+                    
                     <input type="submit" class="mt-2 btn btn-success" value="publish">
                     
                        
@@ -29,9 +36,8 @@
                 </div>
             </div>
             <div class="panel panel-body"> 
-                <h2>all posts</h2>
-                @if($posts)
-                @foreach($posts as $post)
+                <h2>My posts</h2>
+                @foreach($user->posts as $post)
                 <div class="panel panel-body mt-2">
                     <h3>{{ $post->title }} 
                         <mark><small>
@@ -42,11 +48,24 @@
                 
                 <div>{!! $post->description !!}
                 </div>
+                <hr>
+                <div>
+                    @foreach ($post->tags as $tag)
+                         <span class="badge badge-primary">{{ $tag->name }}</span>
+                    @endforeach
+                </div>
                 </div> 
                 @endforeach
-                @endif
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script>
+     $('.select2').select2();
+     $('.select2-multi').select2();
+    </script>
+
 @endsection
